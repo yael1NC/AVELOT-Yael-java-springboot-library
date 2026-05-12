@@ -1,0 +1,263 @@
+# AUTEURS
+
+### Lister les auteurs
+GET http://localhost:8080/api/auteurs
+
+### Récupérer auteur par ID
+GET http://localhost:8080/api/auteurs/1
+
+### Créer un auteur
+POST http://localhost:8080/api/auteurs
+Content-Type: application/json
+
+{
+  "nom": "Tolkien",
+  "prenom": "J.R.R."
+}
+
+### Créer second auteur
+POST http://localhost:8080/api/auteurs
+Content-Type: application/json
+
+{
+  "nom": "Rowling",
+  "prenom": "J.K."
+}
+
+### Modifier auteur
+PUT http://localhost:8080/api/auteurs/1
+Content-Type: application/json
+
+{
+  "nom": "Tolkien",
+  "prenom": "John Ronald Reuel"
+}
+
+### Rechercher auteur
+GET http://localhost:8080/api/auteurs/search?q=Tolkien
+
+### Supprimer  auteur
+DELETE http://localhost:8080/api/auteurs/2
+
+
+# LIVRES
+
+### Lister les livres
+GET http://localhost:8080/api/livres
+
+### Récupérer livre par ID
+GET http://localhost:8080/api/livres/1
+
+### Créer livre (sans auteur)
+POST http://localhost:8080/api/livres
+Content-Type: application/json
+
+{
+  "titre": "Le Seigneur des Anneaux",
+  "isbn": "978-2-07-061190-3",
+  "categorie": "ROMAN"
+}
+
+### Créer livre (avec auteur)
+POST http://localhost:8080/api/livres
+Content-Type: application/json
+
+{
+  "titre": "Harry Potter à l'école des sorciers",
+  "isbn": "978-2-07-054127-4",
+  "categorie": "ROMAN",
+  "auteurId": 2
+}
+
+### Modifier livre
+PUT http://localhost:8080/api/livres/1
+Content-Type: application/json
+
+{
+  "titre": "Le Seigneur des Anneaux (édition collector)",
+  "isbn": "978-2-07-061190-3",
+  "categorie": "ROMAN",
+  "auteurId": 1
+}
+
+### Rechercher titre
+GET http://localhost:8080/api/livres/search?titre=harry
+
+### Filtrer catégorie
+GET http://localhost:8080/api/livres/categorie/ROMAN
+
+### Supprimer livre
+DELETE http://localhost:8080/api/livres/3
+
+
+# UTILISATEURS
+
+### Lister les utilisateurs
+GET http://localhost:8080/api/utilisateurs
+
+### Récupérer utilisateur par ID
+GET http://localhost:8080/api/utilisateurs/1
+
+### Créer utilisateur
+POST http://localhost:8080/api/utilisateurs
+Content-Type: application/json
+
+{
+  "nom": "Dupont",
+  "prenom": "Alice",
+  "email": "alice.dupont@email.com",
+  "telephone": "0612345678"
+}
+
+### Créer second utilisateur
+POST http://localhost:8080/api/utilisateurs
+Content-Type: application/json
+
+{
+  "nom": "Martin",
+  "prenom": "Bob",
+  "email": "bob.martin@email.com",
+  "telephone": "0698765432"
+}
+
+### Tenter de créer utilisateur avec email déjà existant (400)
+POST http://localhost:8080/api/utilisateurs
+Content-Type: application/json
+
+{
+  "nom": "Autre",
+  "prenom": "Personne",
+  "email": "alice.dupont@email.com",
+  "telephone": "0600000000"
+}
+
+### Modifier utilisateur
+PUT http://localhost:8080/api/utilisateurs/1
+Content-Type: application/json
+
+{
+  "nom": "Dupont",
+  "prenom": "Alice",
+  "email": "alice.dupont.new@email.com",
+  "telephone": "0611111111"
+}
+
+### Rechercher utilisateur
+GET http://localhost:8080/api/utilisateurs/search?q=Alice
+
+### Supprimer utilisateur
+DELETE http://localhost:8080/api/utilisateurs/2
+
+
+# EXEMPLAIRES
+
+### Lister les exemplaires
+GET http://localhost:8080/api/exemplaires
+
+### Récupérer exemplaire par ID
+GET http://localhost:8080/api/exemplaires/1
+
+### Créer exemplaire pour le livre 1
+POST http://localhost:8080/api/exemplaires
+Content-Type: application/json
+
+{
+  "livreId": 1,
+  "etat": "BON"
+}
+
+### Créer second exemplaire pour le livre 1
+POST http://localhost:8080/api/exemplaires
+Content-Type: application/json
+
+{
+  "livreId": 1,
+  "etat": "NEUF"
+}
+
+### Créer exemplaire pour le livre 2
+POST http://localhost:8080/api/exemplaires
+Content-Type: application/json
+
+{
+  "livreId": 2,
+  "etat": "NEUF"
+}
+
+### Lister exemplaires d'un livre
+GET http://localhost:8080/api/exemplaires/livre/1
+
+### Lister exemplaires disponibles
+GET http://localhost:8080/api/exemplaires/disponibles
+
+### Lister exemplaires disponibles d'un livre
+GET http://localhost:8080/api/exemplaires/livre/1/disponibles
+
+### Modifier exemplaire
+PUT http://localhost:8080/api/exemplaires/1
+Content-Type: application/json
+
+{
+  "livreId": 1,
+  "etat": "ABIME"
+}
+
+### Supprimer exemplaire
+DELETE http://localhost:8080/api/exemplaires/3
+
+
+# EMPRUNTS
+
+### Lister emprunts
+GET http://localhost:8080/api/emprunts
+
+### Récupérer emprunt par ID
+GET http://localhost:8080/api/emprunts/1
+
+### Créer emprunt (utilisateur 1 emprunte exemplaire 1)
+POST http://localhost:8080/api/emprunts
+Content-Type: application/json
+
+{
+  "utilisateurId": 1,
+  "exemplaireId": 1,
+  "dateRetourPrevue": "2025-06-15"
+}
+
+### Tenter d'emprunter exemplaire déjà emprunté (400)
+POST http://localhost:8080/api/emprunts
+Content-Type: application/json
+
+{
+  "utilisateurId": 1,
+  "exemplaireId": 1,
+  "dateRetourPrevue": "2025-06-20"
+}
+
+### Emprunter second exemplaire
+POST http://localhost:8080/api/emprunts
+Content-Type: application/json
+
+{
+  "utilisateurId": 1,
+  "exemplaireId": 2,
+  "dateRetourPrevue": "2025-05-01"
+}
+
+### Voir les emprunts utilisateur
+GET http://localhost:8080/api/emprunts/utilisateur/1
+
+### Voir les emprunts EN_COURS
+GET http://localhost:8080/api/emprunts/statut/EN_COURS
+
+### Voir les emprunts en retard
+GET http://localhost:8080/api/emprunts/retards
+
+### Enregistrer le retour emprunt
+PUT http://localhost:8080/api/emprunts/1/retour
+
+### Vérifier que l'exemplaire est de nouveau disponible
+GET http://localhost:8080/api/exemplaires/disponibles
+
+### Supprimer emprunt
+DELETE http://localhost:8080/api/emprunts/2
